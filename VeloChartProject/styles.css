@@ -18,7 +18,7 @@
 	 counter-reset: section; 
 	 width:50%;
 }
-
+   
 .memberlist_table, .memberlist_header {
   display: -webkit-box;
   display: -ms-flexbox;
