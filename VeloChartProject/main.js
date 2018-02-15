@@ -3,18 +3,32 @@ const showDiv = document.getElementById("show");
 const formData = document.getElementsByClassName("form");
 const memName = document.getElementById("name");
 const memScore = document.getElementById("score");
-const btnAddData = document.getElementById('addData');
-const btnAddMem = document.getElementById('addMem');
-const btnSave = document.getElementById('save');
-const btnCreate = document.getElementById('create');
+const buttonFill = document.getElementById('fillForm');
+const buttonAddMem = document.getElementById('addMem');
+const buttonSave = document.getElementById('save');
+const buttonCreate = document.getElementById('create');
 
 var memberlistTable = document.getElementsByClassName("memberlist_table");
 var memberlistCell = document.getElementsByClassName("memberlist_cell");
 var memberlistHeader = document.getElementsByClassName("memberlist_cell_head");
 var memberlist = document.getElementById("memberlist");
 var tableCellCount =0; 
-    
-var DataModule = (function() {
+
+// document.addEventListener('DOMContentLoaded', function(){
+//     if (localStorage.length > 0 && document.readyState === "interactive"){
+//         alert('You have some lists');
+//     }
+// })
+
+// window.onload = function(){
+//     if (localStorage.length > 0){
+//         console.log('1');
+//     }
+// }    
+
+
+
+var FormModule = (function() {
     
     // create memberlist  table without  values 
     function _display_table () {
@@ -36,7 +50,7 @@ var DataModule = (function() {
         memberlistTable[tableCellCount].innerHTML="<div class='memberlist_cell'>" + memName.value + "</div><div class='memberlist_cell'>"+score.value+"</div><div class='memberlist_cell'>delete</div>";      
         tableCellCount=tableCellCount + 1;
     }
-//----------------------------------------------------------------
+//-------------------------------------------------------------------------
     function display(data, div) {
         for (let i = 0; i < data.length; i++){
             if (data[i].value === ""){
@@ -59,7 +73,7 @@ var DataModule = (function() {
     var _memberCreator = function(name, score){ 
         return {
             name: name.value,
-            score: score.value
+            score: +score.value
         }
     }
     // clears the input fields of name and score
@@ -76,7 +90,7 @@ var DataModule = (function() {
         }
         
         if ((+score.value) > (+form[1].value) || (+score.value) < 0){
-            console.log('Input score smaller than Maximum');               
+            console.log('Input score bigger than Maximum');               
             return;
         }
 
@@ -109,9 +123,18 @@ var DataModule = (function() {
 })();
 
 
-var StorageModule = (function(){
+var setDataModule = (function(){
+
+    class _CreateGroup {
+        constructor(title, maxScore, data){
+            this.title = title;
+            this.data = data;
+            this.maxScore = +maxScore;
+        }
+        //we might need methods
+    }
     // checks if the amount of members equals to the one chosen by the user
-    function _checkIfEnough(amount, array){
+    var _checkIfEnough = function(amount, array){
         if (+amount !== array.length){
             let perm = confirm('You haven\'t input enough members. You\'re sure you want to save?');
             return perm;
@@ -119,30 +142,30 @@ var StorageModule = (function(){
         return +amount === array.length;
     }
     // checks if there is a property with the same name in local/session storage
-    function _checkStorage(storage, name){
-        if (storage.getItem(name) !== null){
+    var _checkStorage = function(storage, title){
+        if (storage.getItem(title) !== null){
             let perm = confirm('You already have a directory with the same name. Want to replace?');
             return perm;
         }
-        return storage.getItem(name) === null;
+        return storage.getItem(title) === null;
     }
     // saves data to the local storage
-    function saveToList(name, amount, array){
-        let items = JSON.stringify(array);
-        let enough = _checkIfEnough(amount, array);
-        let exists = _checkStorage(localStorage, name);
+    var saveToList = function(form, array){
+        let enough = _checkIfEnough(form[2].value, array);
+        let exists = _checkStorage(localStorage, form[0].value);
         if(exists && enough){
-            localStorage.setItem(name, items);
+            let group = new _CreateGroup(form[0].value, form[1].value, array);
+            localStorage.setItem(form[0].value, JSON.stringify(group));
             array.length = 0;
         }
     }
     //save data to session storage (there could be only one session for saving data by adding one more parameter to one of these functions, but lets keep it so)
-    function createNoSave(name, amount, array){
-        let items = JSON.stringify(array);
-        let enough = _checkIfEnough(amount, array);
-        let exists = _checkStorage(sessionStorage, name);
+    var createNoSave = function(form, array){
+        let enough = _checkIfEnough(form[2].value, array);
+        let exists = _checkStorage(sessionStorage, form[0].value);
         if(exists && enough){
-            sessionStorage.setItem(name, items);
+            let group = new _CreateGroup(form[0].value, form[1].value, array);
+            sessionStorage.setItem(form[0].value, JSON.stringify(group));
             array.length = 0;
         }
     }
@@ -153,35 +176,43 @@ var StorageModule = (function(){
     }
 })();
 
+var setOrder = (function(){
 
-btnAddData.addEventListener('click', function(){
-    DataModule.display(formData, showDiv);
+    var increase = function(array){
+        return array.sort((a, b) => a.score - b.score);
+    }
+
+    var descrease = function(array){
+        return array.sort((a, b) => b.score - a.score);
+    }
+
+    return {
+        increase, 
+        descrease
+    }
+})();
+
+
+buttonFill.addEventListener('click', function(){
+    FormModule.display(formData, showDiv);
 })
 
 // for allowing users to enter members with 'Enter' key
 showDiv.addEventListener('keypress', function(event){
     event.stopPropagation();
     if  (event.keyCode == 13){
-        DataModule.addMember(memberArray, formData, memName, memScore);
+        FormModule.addMember(memberArray, formData, memName, memScore);
     }
 })
 
-btnAddMem.addEventListener('click', function(){
-    DataModule.addMember(memberArray, formData, memName, memScore);
+buttonAddMem.addEventListener('click', function(){
+    FormModule.addMember(memberArray, formData, memName, memScore);
 })
 
-btnSave.addEventListener('click', function(){
-    StorageModule.saveToList(formData[0].value, formData[2].value, memberArray);
+buttonSave.addEventListener('click', function(){
+    setDataModule.saveToList(formData, memberArray);
 })
 
-btnCreate.addEventListener('click', function(){
-    StorageModule.createNoSave(formData[0].value, formData[2].value, memberArray);
+buttonCreate.addEventListener('click', function(){
+    setDataModule.createNoSave(formData, memberArray);
 })
-
-
-
-
-
-
-
-
