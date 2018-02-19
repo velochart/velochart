@@ -12,7 +12,7 @@ var memberlistTable = document.getElementsByClassName("memberlist_table");
 var memberlistCell = document.getElementsByClassName("memberlist_cell");
 var memberlistHeader = document.getElementsByClassName("memberlist_cell_head");
 var memberlist = document.getElementById("memberlist");
-var tableCellCount =0; 
+var tableCellCount =0;
 
 // document.addEventListener('DOMContentLoaded', function(){
 //     if (localStorage.length > 0 && document.readyState === "interactive"){
@@ -29,25 +29,25 @@ var tableCellCount =0;
 
 
 var FormModule = (function() {
-    
+
     // create memberlist  table without  values 
     function _display_table () {
-        var countMemberlist = formData[2].value - memberlistTable.length; 
+        var countMemberlist = formData[2].value - memberlistTable.length;
         var memberlistContainer = document.createElement('div');
         if (memberlistHeader.length == 0) {
             memberlistContainer.innerHTML = '<h2>Memberlist</h2><div class="memberlist_header"><div class="memberlist_cell_head">Name</div><div class="memberlist_cell_head">Score</div><div class="memberlist_cell_head">Action</div></div>';;
             memberlist.appendChild(memberlistContainer);
         }
-            for (var j = 0; j < countMemberlist; j++){
-                var createMemberlist = document.createElement("div");
-                createMemberlist.setAttribute("class", "memberlist_table");
-                createMemberlist.innerHTML = "<div class='memberlist_cell'></div><div class='memberlist_cell'></div><div class='memberlist_cell'></div>";
-                memberlist.appendChild(createMemberlist);   
-            }   
+        for (var j = 0; j < countMemberlist; j++){
+            var createMemberlist = document.createElement("div");
+            createMemberlist.setAttribute("class", "memberlist_table");
+            createMemberlist.innerHTML = "<div class='memberlist_cell'></div><div class='memberlist_cell'></div><div class='memberlist_cell'></div>";
+            memberlist.appendChild(createMemberlist);
         }
-        // input name and score into table 
+    }
+    // input name and score into table
     function inputValuesIntoTable() {
-        memberlistTable[tableCellCount].innerHTML="<div class='memberlist_cell'>" + memName.value + "</div><div class='memberlist_cell'>"+score.value+"</div><div class='memberlist_cell'>delete</div>";      
+        memberlistTable[tableCellCount].innerHTML="<div class='memberlist_cell'>" + memName.value + "</div><div class='memberlist_cell'>"+score.value+"</div><div class='memberlist_cell'>delete</div>";
         tableCellCount=tableCellCount + 1;
     }
 //-------------------------------------------------------------------------
@@ -58,7 +58,7 @@ var FormModule = (function() {
                 return;
             }
         }
-        div.style.display = "block";    
+        div.style.display = "block";
         _display_table();
     }
     // check if the same name exists
@@ -70,7 +70,7 @@ var FormModule = (function() {
         return array.length == amount;
     }
     // creates a member LOL        
-    var _memberCreator = function(name, score){ 
+    var _memberCreator = function(name, score){
         return {
             name: name.value,
             score: +score.value
@@ -88,9 +88,9 @@ var FormModule = (function() {
             console.log("Invalid input");
             return;
         }
-        
+
         if ((+score.value) > (+form[1].value) || (+score.value) < 0){
-            console.log('Input score bigger than Maximum');               
+            console.log('Input score bigger than Maximum');
             return;
         }
 
@@ -104,16 +104,16 @@ var FormModule = (function() {
         if (!_checkExistance(array, name)){
             array.push(memberObject);
             inputValuesIntoTable();
-            _clearInput(name, score);  
+            _clearInput(name, score);
             console.log("Member added!");
         }
         else {
             console.log('Member already exists!');
-            _clearInput(name, score);  
+            _clearInput(name, score);
             return;
         }
 
-        console.log(array);   
+        console.log(array);
     }
     // datamodule returns 2 methods and a getter
     return {
@@ -122,14 +122,63 @@ var FormModule = (function() {
     }
 })();
 
+//createing chart
+// console.log(localStorage)
+let chartCreatorModule = (function () {
 
+    let colors = ['#7ce6a7','#77866f','#1c28d9','#e8db1e','#ff6ef3','#670101','#7fffff'];
+
+
+
+    let memberObject = function () {
+        //localObj working for test ...key must be adaptid for code
+        let localObj = JSON.parse(localStorage.getItem(localStorage.key(0)));
+        let chart_container = document.getElementById('chart');
+        let chart_Title = document.createElement('p');
+        let chart = document.createElement('div');
+
+        chart_container.appendChild(chart_Title);
+        chart_container.appendChild(chart);
+
+
+        chart.setAttribute('class','chart');
+
+        // chart_Title.style.fontSize = '40px';
+        if(localObj !== null) {
+            chart_container.setAttribute('class','chart-container');
+            chart_Title.innerHTML = localObj.title;
+
+
+            for (let i = 0, j = 0; i < localObj.data.length; i++, j++) {
+                let i = document.createElement('div');
+                i.setAttribute('class', 'chart_item');
+                chart.appendChild(i);
+                i.style.height = localObj.data[j].score * 100 / localObj.maxScore + '%';
+                i.innerHTML = localObj.data[j].name;
+                i.style.backgroundColor = colors[Math.round(Math.random() * 7)];
+
+
+            }
+        }
+
+
+        // console.log(localObj);
+    };
+    return{
+        memberObject
+    }
+})();
+
+chartCreatorModule.memberObject();
 var setDataModule = (function(){
-
+        // let counter = 0;
     class _CreateGroup {
         constructor(title, maxScore, data){
+            // this.id = counter+1;
             this.title = title;
             this.data = data;
             this.maxScore = +maxScore;
+            // counter += 1;
         }
         //we might need methods
     }
@@ -187,7 +236,7 @@ var setOrder = (function(){
     }
 
     return {
-        increase, 
+        increase,
         descrease
     }
 })();
