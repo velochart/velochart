@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel = "stylesheet" href= "design.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">LOGO</div>
+            <div class="velochart">VELOCHART</div>
+        </div>
+    </header>
+    <section>
+        <div class="container-menu">
+            <div class="menu active">Design</div>
+            <div class="menu">Data</div>
+            <div class="menu">Display</div>
+            <div class="menu">Existing Charts</div>
+        </div>
+        <div class="view">
+           <div class="documentation">DOCUMENTATION</div>
+           <div class="content">
+                  <h2 class="content_title">Direction</h2> 
+                  <div class="direction">
+                        <label>
+                            Vertical
+                            <input type="radio" name="direction" value="Vertical">
+                        </label>
+                        <label>
+                            Horizontal
+                            <input type="radio" name="direction" value="Horizontal">
+                        </label>
+                  </div>
+            </div>
+    
+           <div class="content selected">
+               <div class="data_set">
+                <h2 class="content_title">Data Set</h2> 
+                <div class="data">
+                     <label>
+                            <p class="data_title">Graph title</p>
+                            <input type="text" class="chart_data">
+                     </label> 
+                     <label>
+                           <p class="data_title"> Maximum</p>
+                            <input type="number" class="chart_data">
+                     </label> 
+                     <label>
+                           <p class="data_title">Number of items</p>
+                            <input type="number" class="chart_data">
+                     </label> 
+                    
+                </div>
+            </div>
+            <div class="data_details">
+                    <h2 class="content_title">Details</h2>  
+                    <div class="details">
+                            <label>
+                                   <p class="data_title">Item Name</p>
+                                   <input type="text" class="chart_data">
+                            </label> 
+                            <label>
+                                  <p class="data_title"> Item Value</p>
+                                   <input type="number" class="chart_data">
+                            </label> 
+                            <div>
+                                <button class="add_item">Add Item</button>
+                            </div>
+                           
+                       </div>
+            </div>
+              
+            </div>
+           <div class="content">Display</div>
+           <div class="content">Existing Charts</div>
+        </div>
+    </section>
+    <footer></footer>
+</body>
+</html>
