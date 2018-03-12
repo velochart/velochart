@@ -1,56 +1,108 @@
-let memberArray = [];
-const showDiv = document.getElementById("show");
-const formData = document.getElementsByClassName("form");
-const memName = document.getElementById("name");
-const memScore = document.getElementById("score");
-const buttonFill = document.getElementById('fillForm');
-const buttonAddMem = document.getElementById('addMem');
+function openTab(evt, tabId) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("content");
+    tablinks = document.getElementsByClassName("menu");
+
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].className = tabcontent[i].className.replace(" selected", "");
+    }
+
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabId).className += " selected";
+    evt.currentTarget.className += " active";
+}
+
+
+
+let itemArray = [];
+const showDiv = document.getElementById('show');
+const formData = document.getElementsByClassName('data_form');
+const itemName = document.getElementById('name');
+const itemValue = document.getElementById('value');
+const currentList = document.getElementById('current_list');
+const buttonFill = document.getElementById('continue');
+const buttonAddItem = document.getElementById('addItem');
 const buttonSave = document.getElementById('save');
 const buttonCreate = document.getElementById('create');
 
-var memberlistTable = document.getElementsByClassName("memberlist_table");
-var memberlistCell = document.getElementsByClassName("memberlist_cell");
-var memberlistHeader = document.getElementsByClassName("memberlist_cell_head");
-var memberlist = document.getElementById("memberlist");
-var tableCellCount =0; 
 
-// document.addEventListener('DOMContentLoaded', function(){
-//     if (localStorage.length > 0 && document.readyState === "interactive"){
-//         alert('You have some lists');
-//     }
-// })
+var validationModule = (function() {
 
-// window.onload = function(){
-//     if (localStorage.length > 0){
-//         console.log('1');
-//     }
-// }    
+    var _checkExistance = function(array, name){
+        return !array.some((x) => x.name === name.value);
+    }
+
+    var _checkIfEmpty = function(name, value) {
+        return name.value !== '' && value.value !== '';
+    }
+
+    var _checkIfBigger = function(value, form) {
+        return +value.value <= +form[1].value;
+    }
+
+    var checkValidation = function(array, form, name, value) {
+        return _checkExistance(array, name) && _checkIfEmpty(name, value) && _checkIfBigger(value, form);
+    }
+
+    return {
+        checkValidation
+    }
+})()
+
+
+var ItemListModule = ( function(){
+
+    var deleteFromTable = function(array, item) {
+        let index;
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].name === item.innerHTML){
+                index = i;
+                break;
+            }
+        }
+        array.splice(index, 1);
+    }
+
+    var insertIntoTable = function(name, value, currentList, array) {
+        
+        let itemList = document.createElement("div");   
+        let nameCell = document.createElement("div");   
+        nameCell.innerHTML = name.value;
+        console.log(name.value)
+        let valueCell = document.createElement("div");
+        valueCell.innerHTML = value.value;
+        let deleteCell = document.createElement("div");  
+        deleteCell.innerHTML = 'Delete';
+        deleteCell.addEventListener('click', function(){
+            currentList.removeChild(itemList);
+            deleteFromTable(array, nameCell);
+        })  
+        itemList.classList.add('itemlist_table'); 
+        nameCell.classList.add('itemlist_cell'); 
+        valueCell.classList.add('itemlist_cell'); 
+        deleteCell.classList.add('itemlist_cell'); 
+        itemList.appendChild(nameCell);
+        itemList.appendChild(valueCell);
+        itemList.appendChild(deleteCell); 
+        currentList.appendChild(itemList);
+        
+    }
+
+    var saveToList = function(){
+
+    }
+
+    return {
+        insertIntoTable,
+    }
+})()
 
 
 
 var FormModule = (function() {
     
-    // create memberlist  table without  values 
-    function _display_table () {
-        var countMemberlist = formData[2].value - memberlistTable.length; 
-        var memberlistContainer = document.createElement('div');
-        if (memberlistHeader.length == 0) {
-            memberlistContainer.innerHTML = '<h2>Memberlist</h2><div class="memberlist_header"><div class="memberlist_cell_head">Name</div><div class="memberlist_cell_head">Score</div><div class="memberlist_cell_head">Action</div></div>';;
-            memberlist.appendChild(memberlistContainer);
-        }
-            for (var j = 0; j < countMemberlist; j++){
-                var createMemberlist = document.createElement("div");
-                createMemberlist.setAttribute("class", "memberlist_table");
-                createMemberlist.innerHTML = "<div class='memberlist_cell'></div><div class='memberlist_cell'></div><div class='memberlist_cell'></div>";
-                memberlist.appendChild(createMemberlist);   
-            }   
-        }
-        // input name and score into table 
-    function inputValuesIntoTable() {
-        memberlistTable[tableCellCount].innerHTML="<div class='memberlist_cell'>" + memName.value + "</div><div class='memberlist_cell'>"+score.value+"</div><div class='memberlist_cell'>delete</div>";      
-        tableCellCount=tableCellCount + 1;
-    }
-//-------------------------------------------------------------------------
     function display(data, div) {
         for (let i = 0; i < data.length; i++){
             if (data[i].value === ""){
@@ -59,66 +111,32 @@ var FormModule = (function() {
             }
         }
         div.style.display = "block";    
-        _display_table();
+        // _display_table();
     }
-    // check if the same name exists
-    var _checkExistance = function(array, name){
-        return array.some((x) => x.name === name.value);
-    }
-    // check if the maximum number of members reached
-    var _checkMemberLimit = function(array, amount){
-        return array.length == amount;
-    }
-    // creates a member LOL        
-    var _memberCreator = function(name, score){ 
+    
+    // creates a item LOL        
+    var _itemCreator = function(name, value){ 
         return {
             name: name.value,
-            score: +score.value
+            value: +value.value
         }
     }
-    // clears the input fields of name and score
-    var _clearInput = function(name, score){
+    // clears the input fields of name and value
+    var clearInput = function(name, value){
         name.value = "";
-        score.value = "";
+        value.value = "";
     }
 
-    var addMember = function (array, form, name, score) {
-
-        if (name.value === "" || score.value === ""){
-            console.log("Invalid input");
-            return;
-        }
-        
-        if ((+score.value) > (+form[1].value) || (+score.value) < 0){
-            console.log('Input score bigger than Maximum');               
-            return;
-        }
-
-        if (_checkMemberLimit(array, form[2].value)){
-            alert('Maximum members reached');
-            return;
-        }
-
-        let memberObject = _memberCreator(name, score);
-
-        if (!_checkExistance(array, name)){
-            array.push(memberObject);
-            inputValuesIntoTable();
-            _clearInput(name, score);  
-            console.log("Member added!");
-        }
-        else {
-            console.log('Member already exists!');
-            _clearInput(name, score);  
-            return;
-        }
-
-        console.log(array);   
+    var addItem = function (array, name, value) {
+        let itemObject = _itemCreator(name, value);
+        array.push(itemObject);
+        console.log(array); 
     }
     // datamodule returns 2 methods and a getter
     return {
         display,
-        addMember
+        clearInput,
+        addItem
     }
 })();
 
@@ -126,17 +144,17 @@ var FormModule = (function() {
 var setDataModule = (function(){
 
     class _CreateGroup {
-        constructor(title, maxScore, data){
+        constructor(title, value, data){
             this.title = title;
             this.data = data;
-            this.maxScore = +maxScore;
+            this.value = +value;
         }
         //we might need methods
     }
-    // checks if the amount of members equals to the one chosen by the user
+    // checks if the amount of items equals to the one chosen by the user
     var _checkIfEnough = function(amount, array){
         if (+amount !== array.length){
-            let perm = confirm('You haven\'t input enough members. You\'re sure you want to save?');
+            let perm = confirm('You haven\'t input enough items. You\'re sure you want to save?');
             return perm;
         }
         return +amount === array.length;
@@ -150,40 +168,29 @@ var setDataModule = (function(){
         return storage.getItem(title) === null;
     }
     // saves data to the local storage
-    var saveToList = function(form, array){
+    var save = function(form, array, storage){
         let enough = _checkIfEnough(form[2].value, array);
-        let exists = _checkStorage(localStorage, form[0].value);
+        let exists = _checkStorage(storage, form[0].value);
         if(exists && enough){
             let group = new _CreateGroup(form[0].value, form[1].value, array);
-            localStorage.setItem(form[0].value, JSON.stringify(group));
-            array.length = 0;
-        }
-    }
-    //save data to session storage (there could be only one session for saving data by adding one more parameter to one of these functions, but lets keep it so)
-    var createNoSave = function(form, array){
-        let enough = _checkIfEnough(form[2].value, array);
-        let exists = _checkStorage(sessionStorage, form[0].value);
-        if(exists && enough){
-            let group = new _CreateGroup(form[0].value, form[1].value, array);
-            sessionStorage.setItem(form[0].value, JSON.stringify(group));
+            storage.setItem(form[0].value, JSON.stringify(group));
             array.length = 0;
         }
     }
 
     return {
-        saveToList,
-        createNoSave
+        save
     }
 })();
 
 var setOrder = (function(){
 
     var increase = function(array){
-        return array.sort((a, b) => a.score - b.score);
+        return array.sort((a, b) => a.value - b.value);
     }
 
     var descrease = function(array){
-        return array.sort((a, b) => b.score - a.score);
+        return array.sort((a, b) => b.value - a.value);
     }
 
     return {
@@ -197,22 +204,37 @@ buttonFill.addEventListener('click', function(){
     FormModule.display(formData, showDiv);
 })
 
+// for allowing users to enter items with 'Enter' key
+itemName.addEventListener("keypress", function (event) {
+    if (event.keyCode == 13){
+        itemValue.focus();
+    }
+});
+
 // for allowing users to enter members with 'Enter' key
-showDiv.addEventListener('keypress', function(event){
+itemValue.addEventListener('keypress', function(event){
     event.stopPropagation();
     if  (event.keyCode == 13){
-        FormModule.addMember(memberArray, formData, memName, memScore);
+        FormModule.addItem(itemArray, itemName, itemValue);
+        ItemListModule.insertIntoTable(itemName, itemValue, currentList);
+        FormModule.clearInput(itemName, itemValue)
     }
 })
 
-buttonAddMem.addEventListener('click', function(){
-    FormModule.addMember(memberArray, formData, memName, memScore);
+buttonAddItem.addEventListener('click', function() {
+    if (validationModule.checkValidation(itemArray, formData, itemName, itemValue)){
+        FormModule.addItem(itemArray, itemName, itemValue);
+        ItemListModule.insertIntoTable(itemName, itemValue, currentList, itemArray);
+        FormModule.clearInput(itemName, itemValue);
+    }
+    else
+        console.log('Something went wrong')
 })
 
-buttonSave.addEventListener('click', function(){
-    setDataModule.saveToList(formData, memberArray);
-})
+// buttonSave.addEventListener('click', function(){
+//     setDataModule.save(formData, itemArray, localStorage);
+// })
 
-buttonCreate.addEventListener('click', function(){
-    setDataModule.createNoSave(formData, memberArray);
-})
+// buttonCreate.addEventListener('click', function(){
+//     setDataModule.save(formData, itemArray, sessionStorage);
+// })
