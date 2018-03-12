@@ -90,8 +90,17 @@ var ItemListModule = ( function(){
         
     }
 
-    var saveToList = function(){
-
+    var saveToList = function(list){
+        if (localStorage.length > 0){
+            for (let i = 0; i < localStorage.length; i++){
+                let x = document.createElement('div');
+                x.style.cssText = "background-color: red; font-size: 20px; border-radius: 20%;";
+                x.id = i;
+                let obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                x.innerHTML = obj.title;
+                list.appendChild(x);
+            }
+        }
     }
 
     return {
