@@ -15,7 +15,7 @@ function openTab(evt, tabId) {
 }
 
 
-let colors = ['#7ce6a7', '#77866f', '#1c28d9', '#e8db1e', '#ff6ef3', '#670101', '#7fffff'];
+// let colors = ['#7ce6a7', '#77866f', '#1c28d9', '#e8db1e', '#ff6ef3', '#670101', '#7fffff'];
 let itemArray = [];
 const showDiv = document.getElementById('show');
 const formData = document.getElementsByClassName('data_form');
@@ -26,6 +26,9 @@ const buttonFill = document.getElementById('continue');
 const buttonAddItem = document.getElementById('addItem');
 const buttonSave = document.getElementById('save');
 const buttonCreate = document.getElementById('create_chart');
+const tabDisplay = document.querySelector('#display');
+const tabDataSet = document.querySelector('#data_set');
+const menuItem = document.getElementsByClassName('menu');
 
 
 var validationModule = (function() {
@@ -70,7 +73,6 @@ var ItemListModule = ( function(){
         let itemList = document.createElement("div");   
         let nameCell = document.createElement("div");   
         nameCell.innerHTML = name.value;
-        console.log(name.value)
         let valueCell = document.createElement("div");
         valueCell.innerHTML = value.value;
         let deleteCell = document.createElement("div");  
@@ -78,7 +80,7 @@ var ItemListModule = ( function(){
         deleteCell.addEventListener('click', function(){
             currentList.removeChild(itemList);
             deleteFromTable(array, nameCell);
-        })  
+        });
         itemList.classList.add('itemlist_table'); 
         nameCell.classList.add('itemlist_cell'); 
         valueCell.classList.add('itemlist_cell'); 
@@ -88,17 +90,17 @@ var ItemListModule = ( function(){
         itemList.appendChild(deleteCell); 
         currentList.appendChild(itemList);
         
-    }
+    };
 
     var saveToList = function(form, array){
 
-    }
+    };
 
     return {
         insertIntoTable,
         saveToList,
     }
-})()
+})();
 
 
 
@@ -209,7 +211,7 @@ var getDataModule = (function () {
             chart.appendChild(i);
             i.style.height = storageObj.data[j].value * 100 / storageObj.value + '%';
             i.innerHTML = storageObj.data[j].name;
-            i.style.backgroundColor = colors[Math.round(Math.random() * 7)];
+            // i.style.backgroundColor = ;
 
 
         }
@@ -284,6 +286,13 @@ buttonAddItem.addEventListener('click', function() {
 buttonCreate.addEventListener('click', function () {
     setDataModule.save(formData,itemArray,sessionStorage);
     getDataModule.createChart(sessionStorage);
+    buttonCreate.setAttribute('disabled',true);
+    tabDataSet.classList.remove('selected');
+    tabDisplay.classList.add('selected');
+    menuItem[1].classList.remove('active');
+    menuItem[2].classList.add('active');
+
+
 });
 // buttonSave.addEventListener('click', function(){
 //     setDataModule.save(formData, itemArray, localStorage);
