@@ -18,7 +18,7 @@ body {
     justify-content: space-around;
     background-color: #454854;
     color: #fff;
-    padding: 5px;
+    padding: 0;
     align-items: center;
 }
 
@@ -26,30 +26,45 @@ body {
     flex-basis: 100%;
     font-size: 40px;
     text-align: center;
+    margin: 0;
+    color: #e2dbdb;
  }
 
  .menu {
     font-size: 30px;
     cursor: pointer;
-    color: #75d3f6;
+    color: #e2dbdb;
+    padding: 10px;
+    width: 25%;
+    text-align: center;
     transition: color 0.3s ease-in-out;
  }
 .menu:hover {
-    color: #2585c7;
+    color: #fff;
 }
  .active {
-    border: 1px solid #ddd;
-    border-radius: 4px 4px 0 0;
-    padding: 10px;
+    border-radius: 4px;
+    background-color: #7a7474;
+    color: #e2dbdb;
+    border: 1px solid #e2dbdb;
  }
  
  .view {
     display: flex; 
     margin-top: 40px;
+    justify-content: space-around;
+    align-items: flex-start;
      }
 
  .documentation {
-    flex-basis: 30%;
+    flex-basis: 25%;
+    border: 2px solid #fff;
+    padding: 0 20px 20px 20px;
+    border-radius: 5px;
+    background: #e2dbdb;
+    color: black;
+    text-align: justify;
+    font-size: 18px;
  }
 
  .content {
@@ -65,7 +80,7 @@ body {
  .content_title {
     border-bottom: 1px solid #a1a5a9;
     padding: 10px;
-    color: #375662;
+    color: #2d7e96;
     font-weight: 600;
     margin: 0;
     text-align: center;
@@ -111,20 +126,25 @@ body {
  .add_item {
     padding: 5px 10px;
     font-size: 20px;
-    background-color: #587bab;
+    background-color: #1d6378;
     color: #fff;
-    border: 1px solid #587bab;
+    border: 1px solid #1d6378;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 35px;
     outline: none;
+    transition: all 0.3s;
+ }
+
+ .add_item:hover {
+    background-color: #2d7e96;
  }
 
 
  .data_set, .data_details {
     background-color: #e2dbdb;
-    border: 1px solid #636363;
     border-radius: 5px;
+    border: 2px solid #fff;
  }
 
  .data_details {
@@ -134,19 +154,12 @@ body {
 
  /**** table ***/
 
-.item_list {
-    /* background-color: #f5f5f5; */
-    
-}
-
 .item_details {
     background-color: #e2dbdb;
-    border-top: 1px solid #d9d9d9;
-    border-left: 1px solid #d9d9d9;
-    border-right: 1px solid #d9d9d9;
     border-radius: 5px;
     margin-top: 20px;
     margin-bottom: 20px;
+    border: 2px solid #fff;
 }
 
 .itemlist_table, .itemlist_header {
@@ -182,25 +195,27 @@ body {
 .create_button button{
     margin: 2vh;
 }
-.fa-chart-bar{
-    background-image: url('https://use.fontawesome.com/releases/v5.0.8/svgs/regular/chart-bar.svg');
-    background-repeat: no-repeat;
-    width: 5vh;
-    height: 5vw;
-}
 
 .logo {
     width: 50px;
     height: 50px;
 }
 .chart-container{
-    background-color: #fff;
+    background-color: #e2dbdb;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.chart-container .add_item {
+    margin-bottom: 20px;
 }
 
 .chart-container p{
     text-align: center;
     font-size: 3em;
     margin: 0 auto;
+    color: #2d7e96;
 }
 .chart-container div{
     display: flex;
@@ -211,13 +226,55 @@ body {
     display: flex;
     width: 50vw;
     height: 50vh;
-    border-bottom: dashed #564949;
-    border-left: dashed #564949;
+    border-bottom:0.5px solid #564949;
+    border-left:0.5px solid #564949;
     align-items: flex-end;
 
 }
 .chart_item {
     margin-left: 5px;
-    width: 4%;
+    /* width: 4%; */
     background-color: #6d7993;
 }
+
+.dir_image  {
+    width: 50px;
+    display: block;
+    margin-top: 15px;
+}
+
+.dir_image.horizontal {
+    transform: rotate(90deg);
+}
+
+.home_img {
+    display: block;
+    width: 100%;    
+    border-radius: 5px;
+    border: 1px solid #fff;
+}
+
+#home {
+    position: relative;
+    text-align: center;
+}
+
+.start {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: #fff;
+    font-size: 35px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.start:hover {
+    color: #2d7e96;
+}
+
+.invalid {
+    border: 1px solid red;
+}
+

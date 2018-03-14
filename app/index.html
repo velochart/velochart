@@ -11,32 +11,44 @@
     <header>
         <div class="container">
             <div class="logo">
-                <img class = "logo" src = "img/logo.png">
+                <a href="" title="Home"><img class = "logo" src = "img/logo.png"></a>
             </div>
-            <div class="velochart">VELOCHART</div>
+            <h1 class="velochart">VELOCHART</h1>
         </div>
     </header>
     <section>
         <div class="container-menu">
-            <div class="menu active" onclick="openTab(event,'direction')">Design </div>
+            <div class="menu" onclick="openTab(event,'direction')">Design </div>
             <div class="menu" onclick="openTab(event,'data_set')" >Data</div>
             <div class="menu" onclick="openTab(event,'display')">Display</div>
             <div class="menu" onclick="openTab(event,'existing_charts')">Existing Charts</div>
         </div>
         <div class="view">
-           <div class="documentation">DOCUMENTATION</div>
-           <div class="content selected" id="direction">
+           <div class="documentation">
+               <div>
+                   <h2 class="content_title">Documentation</h2>
+                   <p class="doc_content">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                   </p>
+               </div>
+            </div>
+           <div class="content selected" id="home">
+                <img class="home_img" src="img/home.png" alt="home">
+                <h3 class="start"  onclick="openTab(event,'direction')">Start</h3>
+           </div>
+           <div class="content" id="direction">
                <div class="data_set">
                   <h2 class="content_title">Direction</h2> 
                   <div class="direction">
                         <label>
                             Vertical 
                             <input type="radio" name="direction" value="Vertical">
-                            <div class="far fa-chart-bar"></div>
+                            <img class="dir_image" src="img/direction.png" alt="horizontal">
                         </label>
                         <label>
                             Horizontal
                             <input type="radio" name="direction" value="Horizontal">
+                            <img class="dir_image horizontal" src="img/direction.png" alt="horizontal">
                         </label>
                   </div>
                </div>
@@ -50,7 +62,7 @@
                             <input type="text" class="chart_data data_form">
                      </label> 
                      <label>
-                           <p class="data_info"> Maximum</p>
+                           <p class="data_info">Maximum Value</p>
                             <input type="number" class="chart_data data_form">
                      </label> 
                      <button id = "continue" class = "add_item">Continue</button>
@@ -103,5 +115,6 @@
     </section> 
     <footer></footer>
     <script src="js/main.js"></script>
+    <script src="js/events.js"></script>
 </body>
 </html>

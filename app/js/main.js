@@ -11,14 +11,19 @@ function openTab(evt, tabId) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(tabId).className += " selected";
-    evt.currentTarget.className += " active";
+    if (evt.currentTarget.className=='start') {
+        document.getElementsByClassName("menu")[0].className += " active";
+    }
+    else {
+        evt.currentTarget.className += " active";
+    }
+    
 }
 
 
-// let colors = ['#7ce6a7', '#77866f', '#1c28d9', '#e8db1e', '#ff6ef3', '#670101', '#7fffff'];
 let itemArray = [];
 const showDiv = document.getElementById('show');
-const formData = document.getElementsByClassName('data_form');
+const formData = document.getElementsByClassName('data_form'); //arr1
 const itemName = document.getElementById('name');
 const itemValue = document.getElementById('value');
 const currentList = document.getElementById('current_list');
@@ -29,16 +34,27 @@ const buttonCreate = document.getElementById('create_chart');
 const tabDisplay = document.querySelector('#display');
 const tabDataSet = document.querySelector('#data_set');
 const menuItem = document.getElementsByClassName('menu');
+const items = [itemName, itemValue];
 
 
 var validationModule = (function() {
 
-    var _checkExistance = function(array, name){
-        return !array.some((x) => x.name === name.value);
+    var _checkIfEmpty = function(array) {
+
+        let count = 0;
+
+        for (let i = 0; i < array.length; i++) {
+            if (array[i] == "") {
+                array[i].classList.add('invalid');
+                count++;
+            }
+        }
+
+        return count > 0;
     }
 
-    var _checkIfEmpty = function(name, value) {
-        return name.value !== '' && value.value !== '';
+    var _checkExistance = function(array, name){
+        return !array.some((x) => x.name === name.value);
     }
 
     var _checkIfBigger = function(value, form) {
@@ -103,18 +119,20 @@ var ItemListModule = ( function(){
 })();
 
 
-
 var FormModule = (function() {
     
     function display(data, div) {
+
         for (let i = 0; i < data.length; i++){
             if (data[i].value === ""){
-                console.log("Empty input field!");
-                return;
+                data[i].classList.add('invalid');
+            }
+            else {
+
             }
         }
         div.style.display = "block";    
-        // _display_table();
+        
     }
     
     // creates a item LOL        
@@ -133,7 +151,7 @@ var FormModule = (function() {
     var addItem = function (array, name, value) {
         let itemObject = _itemCreator(name, value);
         array.push(itemObject);
-        console.log(array); 
+     
     }
     // datamodule returns 2 methods and a getter
     return {
@@ -154,15 +172,7 @@ var setDataModule = (function(){
         }
         //we might need methods
     }
-    // checks if the amount of items equals to the one chosen by the user
-    // var _checkIfEnough = function(amount, array){
-    //     if (+amount !== array.length){
-    //         let perm = confirm('You haven\'t input enough items. You\'re sure you want to save?');
-    //         return perm;
-    //     }
-    //     return +amount === array.length;
-    // }
-    // checks if there is a property with the same name in local/session storage
+    
     var _checkStorage = function(storage, title){
         if (storage.getItem(title) !== null){
             let perm = confirm('You already have a directory with the same name. Want to replace?');
@@ -210,6 +220,7 @@ var getDataModule = (function () {
             i.setAttribute('class', 'chart_item');
             chart.appendChild(i);
             i.style.height = storageObj.data[j].value * 100 / storageObj.value + '%';
+            i.style.width = 50/storageObj.data.length - 5 +'vw'; 
             i.innerHTML = storageObj.data[j].name;
             // i.style.backgroundColor = ;
 
@@ -252,52 +263,3 @@ var setOrder = (function(){
 })();
 
 
-buttonFill.addEventListener('click', function(){
-    FormModule.display(formData, showDiv);
-})
-
-// for allowing users to enter items with 'Enter' key
-itemName.addEventListener("keypress", function (event) {
-    if (event.keyCode == 13){
-        itemValue.focus();
-    }
-});
-
-// for allowing users to enter members with 'Enter' key
-itemValue.addEventListener('keypress', function(event){
-    event.stopPropagation();
-    if  (event.keyCode == 13){
-        FormModule.addItem(itemArray, itemName, itemValue);
-        ItemListModule.insertIntoTable(itemName, itemValue, currentList);
-        FormModule.clearInput(itemName, itemValue)
-    }
-})
-
-buttonAddItem.addEventListener('click', function() {
-    if (validationModule.checkValidation(itemArray, formData, itemName, itemValue)){
-        FormModule.addItem(itemArray, itemName, itemValue);
-        ItemListModule.insertIntoTable(itemName, itemValue, currentList, itemArray);
-        FormModule.clearInput(itemName, itemValue);
-    }
-    else
-        console.log('Something went wrong')
-})
-
-buttonCreate.addEventListener('click', function () {
-    setDataModule.save(formData,itemArray,sessionStorage);
-    getDataModule.createChart(sessionStorage);
-    buttonCreate.setAttribute('disabled',true);
-    tabDataSet.classList.remove('selected');
-    tabDisplay.classList.add('selected');
-    menuItem[1].classList.remove('active');
-    menuItem[2].classList.add('active');
-
-
-});
-// buttonSave.addEventListener('click', function(){
-//     setDataModule.save(formData, itemArray, localStorage);
-// })
-
-// buttonCreate.addEventListener('click', function(){
-//     setDataModule.save(formData, itemArray, sessionStorage);
-// })
