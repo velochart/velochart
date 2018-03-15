@@ -101,6 +101,7 @@ body {
     justify-content: space-around;
     padding: 15px;
     align-items: center;
+    flex-wrap: wrap;
  }
 
  .data label {
@@ -265,16 +266,35 @@ body {
     left: 50%;
     transform: translate(-50%, 0);
     color: #fff;
-    font-size: 35px;
+    font-size: 30px;
     cursor: pointer;
     transition: all 0.3s;
-}
-
-.start:hover {
-    color: #2d7e96;
+    background-color: #587998;
 }
 
 .invalid {
+    position: relative;
+}
+
+.invalid input{
     border: 1px solid red;
+}
+
+.invalid::before {
+    content: '!';
+    border-radius: 50%;
+    background-color: red;
+    text-align: center;
+    padding: 2px 9px;
+    color: #fff;
+    position: absolute;
+    right: 20%;
+    top: 6px;
+    font-weight: bold;
+}
+
+.existing_charts_title {
+    background-color: red; 
+    font-size: 20px; 
 }
 

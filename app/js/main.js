@@ -11,7 +11,7 @@ function openTab(evt, tabId) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(tabId).className += " selected";
-    if (evt.currentTarget.className=='start') {
+    if (evt.currentTarget.id=='start') {
         document.getElementsByClassName("menu")[0].className += " active";
     }
     else {
@@ -35,6 +35,7 @@ const tabDisplay = document.querySelector('#display');
 const tabDataSet = document.querySelector('#data_set');
 const menuItem = document.getElementsByClassName('menu');
 const items = [itemName, itemValue];
+const existingList =document.getElementById('chart_titles');
 
 
 var validationModule = (function() {
@@ -50,7 +51,7 @@ var validationModule = (function() {
             }
         }
 
-        return count > 0;
+        return count === 0;
     }
 
     var _checkExistance = function(array, name){
@@ -186,7 +187,11 @@ var setDataModule = (function(){
         if(exists){
             let group = new _CreateGroup(form[0].value, form[1].value, array);
             storage.setItem(form[0].value, JSON.stringify(group));
-            array.length = 0;
+           
+            if (storage == localStorage) {
+                array.length = 0;
+            }
+           
         }
     }
 
@@ -262,4 +267,27 @@ var setOrder = (function(){
     }
 })();
 
+var addToList = function(list) {
+    if (localStorage.length > 0){
+        for (let i = 0; i < localStorage.length; i++){
+            let x = document.createElement('div');
+            let itemLength = document.createElement('div');
+            let maxValue = document.createElement('div');
+            x.classList.add('itemlist_cell'); 
+            itemLength.classList.add('itemlist_cell');
+            maxValue.classList.add('itemlist_cell');
+            x.id = i;
+            let obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
+            console.log(obj);
+            itemLength.innerHTML = obj.data.length;
+            x.innerHTML = obj.title;
+            list.appendChild(x);
+            list.appendChild(itemLength);
+        }
+    }
+}
 
+window.onload = function(){
+    console.log('onload');
+    addToList(existingList);
+}   

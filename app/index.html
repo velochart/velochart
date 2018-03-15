@@ -34,7 +34,7 @@
             </div>
            <div class="content selected" id="home">
                 <img class="home_img" src="img/home.png" alt="home">
-                <h3 class="start"  onclick="openTab(event,'direction')">Start</h3>
+                <button class="add_item start" id="start"  onclick="openTab(event,'direction')">Start</button>
            </div>
            <div class="content" id="direction">
                <div class="data_set">
@@ -59,11 +59,16 @@
                 <div class="data">
                      <label>
                             <p class="data_info">Graph title</p>
-                            <input type="text" class="chart_data data_form">
+                            <div class="data_field">
+                                <input type="text" class="chart_data data_form">
+                            </div>
+                           
                      </label> 
                      <label>
                            <p class="data_info">Maximum Value</p>
+                           <div class="data_field">
                             <input type="number" class="chart_data data_form">
+                          </div>
                      </label> 
                      <button id = "continue" class = "add_item">Continue</button>
                     
@@ -75,11 +80,15 @@
                     <div class="details">
                         <label>
                             <p class="data_title">Item Name</p>
-                            <input type="text" id="name" class="chart_data">
+                            <div class="data_field">
+                                 <input type="text" id="name" class="chart_data">
+                           </div>
                         </label>
                         <label>
                             <p class="data_title"> Item Value</p>
-                            <input type="number" id="value" class="chart_data">
+                            <div class="data_field">
+                                <input type="number" id="value" class="chart_data">
+                            </div>
                         </label>
                         <div>
                             <button id = "addItem" class="add_item">Add Item</button>
@@ -110,7 +119,16 @@
            <div class="content" id="display">
               <div class="chart_container" id="chart_container"></div>
            </div>
-           <div class="content" id="existing_charts">Existing Charts</div>
+           <div class="content" id="existing_charts">
+               <div class="data_set">
+                    <h2 class="content_title">Existing Charts</h2> 
+                    <div class="data" id="chart_titles">
+                                <div class="itemlist_cell">Title</div>
+                                <div class="itemlist_cell">Amount of Items</div>
+                                <div class="itemlist_cell">Maximum value</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section> 
     <footer></footer>
