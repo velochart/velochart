@@ -33,25 +33,21 @@ const buttonSave = document.getElementById('save');
 const buttonCreate = document.getElementById('create_chart');
 const tabDisplay = document.querySelector('#display');
 const tabDataSet = document.querySelector('#data_set');
+const tabExisting = document.querySelector('#existing_charts');
 const menuItem = document.getElementsByClassName('menu');
 const items = [itemName, itemValue];
 const existingList =document.getElementById('chart_titles');
+const chartTitle =  document.getElementsByClassName('title_cell');
+
+window.onload = function(){
+    addToList(existingList);
+}  
 
 
 var validationModule = (function() {
 
-    var _checkIfEmpty = function(array) {
-
-        let count = 0;
-
-        for (let i = 0; i < array.length; i++) {
-            if (array[i] == "") {
-                array[i].classList.add('invalid');
-                count++;
-            }
-        }
-
-        return count === 0;
+    var _checkIfEmpty = function(name, value) {
+        return !(name.value == "" || value.value == "");
     }
 
     var _checkExistance = function(array, name){
@@ -102,6 +98,7 @@ var ItemListModule = ( function(){
         nameCell.classList.add('itemlist_cell'); 
         valueCell.classList.add('itemlist_cell'); 
         deleteCell.classList.add('itemlist_cell'); 
+        deleteCell.classList.add('delete_cell'); 
         itemList.appendChild(nameCell);
         itemList.appendChild(valueCell);
         itemList.appendChild(deleteCell); 
@@ -123,16 +120,18 @@ var ItemListModule = ( function(){
 var FormModule = (function() {
     
     function display(data, div) {
+        let counter = 0;
 
         for (let i = 0; i < data.length; i++){
             if (data[i].value === ""){
-                data[i].classList.add('invalid');
-            }
-            else {
-
-            }
+                data[i].parentElement.classList.add('invalid');
+                counter++;
+            }  
         }
-        div.style.display = "block";    
+        if(counter === 0){
+            div.style.display = "block";
+        }
+        
         
     }
     
@@ -202,35 +201,42 @@ var setDataModule = (function(){
 
 
 var getDataModule = (function () {
+    
+    var createChart = function (storage, chart_title) {
 
-    var createChart = function (storage) {
-
-        let storageObj = JSON.parse(storage.getItem(storage.key(0)));
+        let storageObj = JSON.parse(storage.getItem(chart_title));
         let chart_container = document.querySelector('#chart_container');
         let chart_Title = document.createElement('p');
         let chart = document.createElement('div');
         let savebtn = document.createElement('button');
+        let maximum = document.createElement('span');
+
 
         chart_container.appendChild(chart_Title);
         chart_container.appendChild(chart);
         chart.setAttribute('class','chart');
+        chart.appendChild(maximum);
+        
         // chart.style.height = storageObj.value + 5 +'%';
 
         if(storageObj !== null) {
             chart_container.setAttribute('class', 'chart-container');
             chart_Title.innerHTML = storageObj.title;
         }
+        maximum.innerHTML =storageObj.value + ' >';
         for (let i = 0, j = 0; i < storageObj.data.length; i++, j++) {
             let i = document.createElement('div');
+            let itemName = document.createElement('p');
             i.setAttribute('class', 'chart_item');
             chart.appendChild(i);
+
+
             i.style.height = storageObj.data[j].value * 100 / storageObj.value + '%';
-            i.style.width = 50/storageObj.data.length - 5 +'vw'; 
-            i.innerHTML = storageObj.data[j].name;
-            // i.style.backgroundColor = ;
-
-
+            i.style.width = 50/storageObj.data.length - 5 +'vw';
+            i.appendChild(itemName);
+            itemName.innerHTML =storageObj.data[j].name;
         }
+
         chart_container.appendChild(savebtn);
         savebtn.setAttribute('class','add_item');
         savebtn.innerText = 'Save Chart';
@@ -274,20 +280,43 @@ var addToList = function(list) {
             let itemLength = document.createElement('div');
             let maxValue = document.createElement('div');
             x.classList.add('itemlist_cell'); 
+            x.classList.add('title_cell'); 
             itemLength.classList.add('itemlist_cell');
             maxValue.classList.add('itemlist_cell');
-            x.id = i;
+            
             let obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
-            console.log(obj);
+            x.id = obj.title;
             itemLength.innerHTML = obj.data.length;
             x.innerHTML = obj.title;
+            maxValue.innerHTML = obj.value;
             list.appendChild(x);
             list.appendChild(itemLength);
+            list.appendChild(maxValue);
         }
     }
 }
 
-window.onload = function(){
-    console.log('onload');
-    addToList(existingList);
-}   
+
+var getFromList = function () {
+
+    for (let chart of chartTitle) {
+        //classname[i].addEventListener('click', myFunction, false);
+        chart.addEventListener('click', function (event) {
+            console.log('hhhhhh');
+            let titleId = this.id;
+            console.log(titleId)
+            getDataModule.createChart(localStorage, titleId);
+            buttonCreate.setAttribute('disabled',true);
+            tabExisting.classList.remove('selected');
+            tabDisplay.classList.add('selected');
+            menuItem[3].classList.remove('active');
+            menuItem[2].classList.add('active');
+        });
+    }
+}
+
+ setTimeout(getFromList, 100);
+
+
+
+

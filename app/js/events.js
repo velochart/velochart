@@ -36,9 +36,11 @@ buttonAddItem.addEventListener('click', function() {
 })
 
 buttonCreate.addEventListener('click', function () {
+    if (itemArray.length === 0)
+    return;
     setDataModule.save(formData,itemArray,sessionStorage);
-    getDataModule.createChart(sessionStorage);
-    buttonCreate.setAttribute('disabled',true);
+    getDataModule.createChart(sessionStorage, formData[0].value);
+    // buttonCreate.setAttribute('disabled',true);
     tabDataSet.classList.remove('selected');
     tabDisplay.classList.add('selected');
     menuItem[1].classList.remove('active');
@@ -53,3 +55,6 @@ buttonCreate.addEventListener('click', function () {
 // buttonCreate.addEventListener('click', function(){
 //     setDataModule.save(formData, itemArray, sessionStorage);
 // })
+
+
+
