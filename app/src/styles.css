@@ -4,22 +4,53 @@ body {
     font-family: sans-serif;
     font-style: unset;
 }
-/*6d7993*/
 
  .container {
-     display: flex;
-     background-color: #1d2832;
-     color: #fff;
-     padding: 5px;
- }
+    display: flex;
+    background-color: #1d2832;
+    color: #fff;
+    padding: 5px;
+}
 
- .container-menu {
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+.container-menu {
     display: flex;
     justify-content: space-around;
     background-color: #454854;
     color: #fff;
     padding: 0;
     align-items: center;
+}
+
+.view {
+    display: flex; 
+    margin-top: 40px;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.documentation {
+    flex-basis: 25%;
+    border: 2px solid #fff;
+    padding: 0 20px 20px 20px;
+    border-radius: 5px;
+    background: #e2dbdb;
+    color: black;
+    text-align: justify;
+    font-size: 18px;
+}
+
+.content_title {
+    border-bottom: 1px solid #a1a5a9;
+    padding: 10px;
+    color: #2d7e96;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
 }
 
  .velochart {
@@ -49,23 +80,9 @@ body {
     border: 1px solid #e2dbdb;
  }
  
- .view {
-    display: flex; 
-    margin-top: 40px;
-    justify-content: space-around;
-    align-items: flex-start;
-     }
 
- .documentation {
-    flex-basis: 25%;
-    border: 2px solid #fff;
-    padding: 0 20px 20px 20px;
-    border-radius: 5px;
-    background: #e2dbdb;
-    color: black;
-    text-align: justify;
-    font-size: 18px;
- }
+
+ 
 
  .content {
     display: none;
@@ -77,15 +94,7 @@ body {
     display: block;
  }
 
- .content_title {
-    border-bottom: 1px solid #a1a5a9;
-    padding: 10px;
-    color: #2d7e96;
-    font-weight: 600;
-    margin: 0;
-    text-align: center;
- }
-
+ 
  .direction {
     display: flex;
     justify-content: space-around;
@@ -197,10 +206,7 @@ body {
     margin: 2vh;
 }
 
-.logo {
-    width: 50px;
-    height: 50px;
-}
+
 .chart-container{
     background-color: #e2dbdb;
     border: 2px solid #fff;

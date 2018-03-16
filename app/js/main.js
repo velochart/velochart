@@ -243,6 +243,12 @@ var getDataModule = (function () {
 
         savebtn.addEventListener('click',function () {
             setDataModule.save(formData, itemArray, localStorage);
+            // location.reload();
+            tabDisplay.classList.remove('selected');
+            tabExisting.classList.add('selected');
+            menuItem[2].classList.remove('active');
+            menuItem[3].classList.add('active');
+            // addToList(itemArray);
         })
 
 
