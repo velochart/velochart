@@ -8,14 +8,12 @@ buttonFill.addEventListener('click', function(){
     FormModule.display(formData, showDiv);
 })
 
-// for allowing users to enter items with 'Enter' key
 itemName.addEventListener("keypress", function (event) {
     if (event.keyCode == 13){
         itemValue.focus();
     }
 });
 
-// for allowing users to enter members with 'Enter' key
 itemValue.addEventListener('keypress', function(event){
     event.stopPropagation();
     if  (event.keyCode == 13){
@@ -40,21 +38,11 @@ buttonCreate.addEventListener('click', function () {
     return;
     setDataModule.save(formData,itemArray,sessionStorage);
     getDataModule.createChart(sessionStorage, formData[0].value);
-    // buttonCreate.setAttribute('disabled',true);
     tabDataSet.classList.remove('selected');
     tabDisplay.classList.add('selected');
     menuItem[1].classList.remove('active');
     menuItem[2].classList.add('active');
-
-
 });
-// buttonSave.addEventListener('click', function(){
-//     setDataModule.save(formData, itemArray, localStorage);
-// })
-
-// buttonCreate.addEventListener('click', function(){
-//     setDataModule.save(formData, itemArray, sessionStorage);
-// })
 
 
 

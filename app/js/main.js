@@ -1,26 +1,3 @@
-function openTab(evt, tabId) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("content");
-    tablinks = document.getElementsByClassName("menu");
-
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].className = tabcontent[i].className.replace(" selected", "");
-    }
-
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabId).className += " selected";
-    if (evt.currentTarget.id=='start') {
-        document.getElementsByClassName("menu")[0].className += " active";
-    }
-    else {
-        evt.currentTarget.className += " active";
-    }
-    
-}
-
-
 let itemArray = [];
 const showDiv = document.getElementById('show');
 const formData = document.getElementsByClassName('data_form'); //arr1
@@ -43,6 +20,26 @@ window.onload = function(){
     addToList(existingList);
 }  
 
+function openTab(evt, tabId) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("content");
+    tablinks = document.getElementsByClassName("menu");
+
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].className = tabcontent[i].className.replace(" selected", "");
+    }
+
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabId).className += " selected";
+    if (evt.currentTarget.id=='start') {
+        document.getElementsByClassName("menu")[0].className += " active";
+    }
+    else {
+        evt.currentTarget.className += " active";
+    }
+}
 
 var validationModule = (function() {
 
@@ -130,19 +127,16 @@ var FormModule = (function() {
         }
         if(counter === 0){
             div.style.display = "block";
-        }
-        
-        
-    }
-    
-    // creates a item LOL        
+        }      
+}
+       
     var _itemCreator = function(name, value){ 
         return {
             name: name.value,
             value: +value.value
         }
     }
-    // clears the input fields of name and value
+    
     var clearInput = function(name, value){
         name.value = "";
         value.value = "";
@@ -153,7 +147,6 @@ var FormModule = (function() {
         array.push(itemObject);
      
     }
-    // datamodule returns 2 methods and a getter
     return {
         display,
         clearInput,
@@ -163,14 +156,12 @@ var FormModule = (function() {
 
 
 var setDataModule = (function(){
-
     class _CreateGroup {
         constructor(title, value, data){
             this.title = title;
             this.data = data;
             this.value = +value;
         }
-        //we might need methods
     }
     
     var _checkStorage = function(storage, title){
@@ -180,8 +171,7 @@ var setDataModule = (function(){
         }
         return storage.getItem(title) === null;
     }
-    // saves data to the local storage
-    var save = function(form, array, storage){
+     var save = function(form, array, storage){
         let exists = _checkStorage(storage, form[0].value);
         if(exists){
             let group = new _CreateGroup(form[0].value, form[1].value, array);
@@ -189,8 +179,7 @@ var setDataModule = (function(){
            
             if (storage == localStorage) {
                 array.length = 0;
-            }
-           
+            }           
         }
     }
 
@@ -211,14 +200,11 @@ var getDataModule = (function () {
         let savebtn = document.createElement('button');
         let maximum = document.createElement('span');
 
-
         chart_container.appendChild(chart_Title);
         chart_container.appendChild(chart);
         chart.setAttribute('class','chart');
         chart.appendChild(maximum);
         
-        // chart.style.height = storageObj.value + 5 +'%';
-
         if(storageObj !== null) {
             chart_container.setAttribute('class', 'chart-container');
             chart_Title.innerHTML = storageObj.title;
@@ -229,7 +215,6 @@ var getDataModule = (function () {
             let itemName = document.createElement('p');
             i.setAttribute('class', 'chart_item');
             chart.appendChild(i);
-
 
             i.style.height = storageObj.data[j].value * 100 / storageObj.value + '%';
             i.style.width = 50/storageObj.data.length - 5 +'vw';
@@ -243,18 +228,11 @@ var getDataModule = (function () {
 
         savebtn.addEventListener('click',function () {
             setDataModule.save(formData, itemArray, localStorage);
-            // location.reload();
             tabDisplay.classList.remove('selected');
             tabExisting.classList.add('selected');
             menuItem[2].classList.remove('active');
             menuItem[3].classList.add('active');
-            // addToList(itemArray);
         })
-
-
-
-        // console.log(storage)
-
 
     }
     return{
@@ -302,12 +280,10 @@ var addToList = function(list) {
     }
 }
 
-
 var getFromList = function () {
 
     for (let chart of chartTitle) {
-        //classname[i].addEventListener('click', myFunction, false);
-        chart.addEventListener('click', function (event) {
+            chart.addEventListener('click', function (event) {
             console.log('hhhhhh');
             let titleId = this.id;
             console.log(titleId)
