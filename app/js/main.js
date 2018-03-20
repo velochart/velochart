@@ -1,8 +1,9 @@
 let itemArray = [];
 const showDiv = document.getElementById('show');
-const formData = document.getElementsByClassName('data_form'); //arr1
+const formData = document.getElementsByClassName('data_form'); 
 const itemName = document.getElementById('name');
 const itemValue = document.getElementById('value');
+const items = [itemName, itemValue];
 const currentList = document.getElementById('current_list');
 const buttonFill = document.getElementById('continue');
 const buttonAddItem = document.getElementById('addItem');
@@ -12,7 +13,6 @@ const tabDisplay = document.querySelector('#display');
 const tabDataSet = document.querySelector('#data_set');
 const tabExisting = document.querySelector('#existing_charts');
 const menuItem = document.getElementsByClassName('menu');
-const items = [itemName, itemValue];
 const existingList =document.getElementById('chart_titles');
 const chartTitle =  document.getElementsByClassName('title_cell');
 
@@ -28,7 +28,6 @@ function openTab(evt, tabId) {
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].className = tabcontent[i].className.replace(" selected", "");
     }
-
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
@@ -46,26 +45,21 @@ var validationModule = (function() {
     var _checkIfEmpty = function(name, value) {
         return !(name.value == "" || value.value == "");
     }
-
     var _checkExistance = function(array, name){
         return !array.some((x) => x.name === name.value);
     }
-
     var _checkIfBigger = function(value, form) {
         return +value.value <= +form[1].value;
     }
-
     var checkValidation = function(array, form, name, value) {
         return _checkExistance(array, name) && _checkIfEmpty(name, value) && _checkIfBigger(value, form);
     }
-
     return {
         checkValidation
     }
 })()
 
-
-var ItemListModule = ( function(){
+var ItemListModule = (function(){
 
     var deleteFromTable = function(array, item) {
         let index;
@@ -99,12 +93,10 @@ var ItemListModule = ( function(){
         itemList.appendChild(nameCell);
         itemList.appendChild(valueCell);
         itemList.appendChild(deleteCell); 
-        currentList.appendChild(itemList);
-        
+        currentList.appendChild(itemList);        
     };
 
     var saveToList = function(form, array){
-
     };
 
     return {
@@ -113,12 +105,10 @@ var ItemListModule = ( function(){
     }
 })();
 
-
 var FormModule = (function() {
     
     function display(data, div) {
         let counter = 0;
-
         for (let i = 0; i < data.length; i++){
             if (data[i].value === ""){
                 data[i].parentElement.classList.add('invalid');
@@ -128,24 +118,21 @@ var FormModule = (function() {
         if(counter === 0){
             div.style.display = "block";
         }      
-}
+    }
        
     var _itemCreator = function(name, value){ 
         return {
             name: name.value,
             value: +value.value
         }
-    }
-    
+    }    
     var clearInput = function(name, value){
         name.value = "";
         value.value = "";
     }
-
     var addItem = function (array, name, value) {
         let itemObject = _itemCreator(name, value);
-        array.push(itemObject);
-     
+        array.push(itemObject);     
     }
     return {
         display,
@@ -182,7 +169,6 @@ var setDataModule = (function(){
             }           
         }
     }
-
     return {
         save
     }
@@ -233,7 +219,6 @@ var getDataModule = (function () {
             menuItem[2].classList.remove('active');
             menuItem[3].classList.add('active');
         })
-
     }
     return{
         createChart,
@@ -284,9 +269,7 @@ var getFromList = function () {
 
     for (let chart of chartTitle) {
             chart.addEventListener('click', function (event) {
-            console.log('hhhhhh');
             let titleId = this.id;
-            console.log(titleId)
             getDataModule.createChart(localStorage, titleId);
             buttonCreate.setAttribute('disabled',true);
             tabExisting.classList.remove('selected');

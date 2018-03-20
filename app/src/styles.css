@@ -17,6 +17,10 @@ body {
     height: 50px;
 }
 
+.section_span {
+    color: #2d7e96;
+}
+
 .container-menu {
     display: flex;
     justify-content: space-around;
@@ -24,6 +28,20 @@ body {
     color: #fff;
     padding: 0;
     align-items: center;
+}
+
+.menu {
+    font-size: 30px;
+    cursor: pointer;
+    color: #e2dbdb;
+    padding: 10px;
+    width: 25%;
+    text-align: center;
+    transition: color 0.3s ease-in-out;
+ }
+
+.menu:hover {
+    color: #fff;
 }
 
 .view {
@@ -53,49 +71,32 @@ body {
     text-align: center;
 }
 
- .velochart {
+.velochart {
     flex-basis: 100%;
     font-size: 40px;
     text-align: center;
     margin: 0;
     color: #e2dbdb;
- }
-
- .menu {
-    font-size: 30px;
-    cursor: pointer;
-    color: #e2dbdb;
-    padding: 10px;
-    width: 25%;
-    text-align: center;
-    transition: color 0.3s ease-in-out;
- }
-.menu:hover {
-    color: #fff;
 }
- .active {
+
+.active {
     border-radius: 4px;
     background-color: #7a7474;
     color: #e2dbdb;
     border: 1px solid #e2dbdb;
- }
- 
+ } 
 
-
- 
-
- .content {
+.content {
     display: none;
     flex-basis: 65vw;
     width: 70%;
-}
-
- .selected {
-    display: block;
  }
 
+.selected {
+    display: block;
+ }
  
- .direction {
+.direction {
     display: flex;
     justify-content: space-around;
     padding: 15px;
@@ -132,7 +133,6 @@ body {
     width: 80%;
  }
 
-
  .add_item {
     padding: 5px 10px;
     font-size: 20px;
@@ -150,7 +150,6 @@ body {
     background-color: #2d7e96;
  }
 
-
  .data_set, .data_details {
     background-color: #e2dbdb;
     border-radius: 5px;
@@ -160,7 +159,6 @@ body {
  .data_details {
     margin-top: 20px;
  }
-
 
  /**** table ***/
 
@@ -180,7 +178,6 @@ body {
     flex-wrap: wrap;
     padding: 0;
 }
-
 
 .itemlist_cell ,.itemlist_cell_head {
     box-sizing: border-box;
@@ -202,10 +199,10 @@ body {
     justify-content: center;
     
 }
+
 .create_button button{
     margin: 2vh;
 }
-
 
 .chart-container{
     background-color: #e2dbdb;
@@ -236,22 +233,24 @@ body {
     border-bottom:0.5px solid #564949;
     border-left:0.5px solid #564949;
     align-items: flex-end;
-
 }
+
 .chart_item {
     margin-left: 5px;
-    /* width: 4%; */
     background-color: #6d7993;
     transition: all 0.5s ease-in-out;
 }
+
 .chart_item p {
     font-size: 20px;
     color: #fff;
 }
+
 .chart_item:hover {
   
     background-color: #5d77b0;
 }
+
 .chart span {
     align-self: flex-start;
     position: relative;
@@ -277,7 +276,6 @@ body {
     border-radius: 5px;
     border: 1px solid #fff;
 }
-
 
 .title_cell {
     cursor: pointer;
@@ -338,17 +336,15 @@ body {
     font-size: 20px; 
 }
 
-
 @media only screen and (max-width: 992px) {
     .view {
        flex-wrap: wrap;
-         }
+     }
     
      .documentation {
         flex-basis: 80%;
         border: none;
-        padding: 0 20px 20px 20px;
-       
+        padding: 0 20px 20px 20px;       
      }
     
      .content {
