@@ -196,6 +196,7 @@ var getDataModule = (function () {
             chart_Title.innerHTML = storageObj.title;
         }
         maximum.innerHTML =storageObj.value + ' >';
+        
         for (let i = 0, j = 0; i < storageObj.data.length; i++, j++) {
             let i = document.createElement('div');
             let itemName = document.createElement('p');
