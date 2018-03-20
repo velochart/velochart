@@ -4,74 +4,99 @@ body {
     font-family: sans-serif;
     font-style: unset;
 }
-/*6d7993*/
 
  .container {
-     display: flex;
-     background-color: #1d2832;
-     color: #fff;
-     padding: 5px;
- }
+    display: flex;
+    background-color: #1d2832;
+    color: #fff;
+    padding: 5px;
+}
 
- .container-menu {
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+.section_span {
+    color: #2d7e96;
+}
+
+.container-menu {
     display: flex;
     justify-content: space-around;
     background-color: #454854;
     color: #fff;
-    padding: 5px;
+    padding: 0;
     align-items: center;
 }
 
- .velochart {
-    flex-basis: 100%;
-    font-size: 40px;
-    text-align: center;
- }
-
- .menu {
+.menu {
     font-size: 30px;
     cursor: pointer;
-    color: #75d3f6;
+    color: #e2dbdb;
+    padding: 10px;
+    width: 25%;
+    text-align: center;
     transition: color 0.3s ease-in-out;
  }
+
 .menu:hover {
-    color: #2585c7;
+    color: #fff;
 }
- .active {
-    border: 1px solid #ddd;
-    border-radius: 4px 4px 0 0;
-    padding: 10px;
- }
- 
- .view {
+
+.view {
     display: flex; 
     margin-top: 40px;
-     }
-
- .documentation {
-    flex-basis: 30%;
- }
-
- .content {
-    display: none;
-    flex-basis: 65vw;
-    width: 70%;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
- .selected {
-    display: block;
- }
+.documentation {
+    flex-basis: 25%;
+    border: 2px solid #fff;
+    padding: 0 20px 20px 20px;
+    border-radius: 5px;
+    background: #e2dbdb;
+    color: black;
+    text-align: justify;
+    font-size: 18px;
+}
 
- .content_title {
+.content_title {
     border-bottom: 1px solid #a1a5a9;
     padding: 10px;
-    color: #375662;
+    color: #2d7e96;
     font-weight: 600;
     margin: 0;
     text-align: center;
+}
+
+.velochart {
+    flex-basis: 100%;
+    font-size: 40px;
+    text-align: center;
+    margin: 0;
+    color: #e2dbdb;
+}
+
+.active {
+    border-radius: 4px;
+    background-color: #7a7474;
+    color: #e2dbdb;
+    border: 1px solid #e2dbdb;
+ } 
+
+.content {
+    display: none;
+    flex-basis: 65vw;
+    width: 70%;
  }
 
- .direction {
+.selected {
+    display: block;
+ }
+ 
+.direction {
     display: flex;
     justify-content: space-around;
     padding: 15px;
@@ -85,7 +110,8 @@ body {
     display: flex;
     justify-content: space-around;
     padding: 15px;
-    align-items: center;
+    /*align-items: center;*/
+    flex-wrap: wrap;
  }
 
  .data label {
@@ -107,46 +133,41 @@ body {
     width: 80%;
  }
 
-
  .add_item {
     padding: 5px 10px;
     font-size: 20px;
-    background-color: #587bab;
+    background-color: #1d6378;
     color: #fff;
-    border: 1px solid #587bab;
+    border: 1px solid #1d6378;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 35px;
     outline: none;
+    transition: all 0.3s;
  }
 
+ .add_item:hover {
+    background-color: #2d7e96;
+ }
 
  .data_set, .data_details {
     background-color: #e2dbdb;
-    border: 1px solid #636363;
     border-radius: 5px;
+    border: 2px solid #fff;
  }
 
  .data_details {
     margin-top: 20px;
  }
 
-
  /**** table ***/
-
-.item_list {
-    /* background-color: #f5f5f5; */
-    
-}
 
 .item_details {
     background-color: #e2dbdb;
-    border-top: 1px solid #d9d9d9;
-    border-left: 1px solid #d9d9d9;
-    border-right: 1px solid #d9d9d9;
     border-radius: 5px;
     margin-top: 20px;
     margin-bottom: 20px;
+    border: 2px solid #fff;
 }
 
 .itemlist_table, .itemlist_header {
@@ -157,7 +178,6 @@ body {
     flex-wrap: wrap;
     padding: 0;
 }
-
 
 .itemlist_cell ,.itemlist_cell_head {
     box-sizing: border-box;
@@ -179,28 +199,27 @@ body {
     justify-content: center;
     
 }
+
 .create_button button{
     margin: 2vh;
 }
-.fa-chart-bar{
-    background-image: url('https://use.fontawesome.com/releases/v5.0.8/svgs/regular/chart-bar.svg');
-    background-repeat: no-repeat;
-    width: 5vh;
-    height: 5vw;
+
+.chart-container{
+    background-color: #e2dbdb;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    text-align: center;
 }
 
-.logo {
-    width: 50px;
-    height: 50px;
-}
-.chart-container{
-    background-color: #fff;
+.chart-container .add_item {
+    margin-bottom: 20px;
 }
 
 .chart-container p{
     text-align: center;
     font-size: 3em;
     margin: 0 auto;
+    color: #2d7e96;
 }
 .chart-container div{
     display: flex;
@@ -211,13 +230,126 @@ body {
     display: flex;
     width: 50vw;
     height: 50vh;
-    border-bottom: dashed #564949;
-    border-left: dashed #564949;
+    border-bottom:0.5px solid #564949;
+    border-left:0.5px solid #564949;
     align-items: flex-end;
-
 }
+
 .chart_item {
     margin-left: 5px;
-    width: 4%;
     background-color: #6d7993;
+    transition: all 0.5s ease-in-out;
+}
+
+.chart_item p {
+    font-size: 20px;
+    color: #fff;
+}
+
+.chart_item:hover {
+  
+    background-color: #5d77b0;
+}
+
+.chart span {
+    align-self: flex-start;
+    position: relative;
+    right: 40px;
+    color: #2d7e96;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.dir_image  {
+    width: 50px;
+    display: block;
+    margin-top: 15px;
+}
+
+.dir_image.horizontal {
+    transform: rotate(90deg);
+}
+
+.home_img {
+    display: block;
+    width: 100%;    
+    border-radius: 5px;
+    border: 1px solid #fff;
+}
+
+.title_cell {
+    cursor: pointer;
+}
+
+.title_cell:hover {
+    color: #2d7e96;
+}
+
+.delete_cell {
+    cursor: pointer;
+}
+
+.delete_cell:hover {
+    color: #2d7e96;
+}
+
+#home {
+    position: relative;
+    text-align: center;
+}
+
+.start {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: #587998;
+}
+
+.invalid {
+    position: relative;
+}
+
+.invalid input{
+    border: 1px solid red;
+}
+
+.invalid::before {
+    content: '!';
+    border-radius: 50%;
+    background-color: red;
+    text-align: center;
+    padding: 2px 9px;
+    color: #fff;
+    position: absolute;
+    right: 20%;
+    top: 6px;
+    font-weight: bold;
+}
+
+.existing_charts_title {
+    background-color: red; 
+    font-size: 20px; 
+}
+
+@media only screen and (max-width: 992px) {
+    .view {
+       flex-wrap: wrap;
+     }
+    
+     .documentation {
+        flex-basis: 80%;
+        border: none;
+        padding: 0 20px 20px 20px;       
+     }
+    
+     .content {
+        flex-basis: 90vw;
+        width: 90%;
+        margin-top: 20px;
+    }
 }

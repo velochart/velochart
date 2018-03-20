@@ -11,50 +11,71 @@
     <header>
         <div class="container">
             <div class="logo">
-                <img class = "logo" src = "img/logo.png">
+                <a href="" title="Home"><img class = "logo" src = "img/logo.png"></a>
             </div>
-            <div class="velochart">VELOCHART</div>
+            <h1 class="velochart">VELOCHART</h1>
         </div>
     </header>
     <section>
         <div class="container-menu">
-            <div class="menu active" onclick="openTab(event,'direction')">Design </div>
+            <div class="menu" onclick="openTab(event,'direction')">Design </div>
             <div class="menu" onclick="openTab(event,'data_set')" >Data</div>
             <div class="menu" onclick="openTab(event,'display')">Display</div>
             <div class="menu" onclick="openTab(event,'existing_charts')">Existing Charts</div>
         </div>
         <div class="view">
-           <div class="documentation">DOCUMENTATION</div>
-           <div class="content selected" id="direction">
+           <div class="documentation">
+               <div>
+                   <h2 class="content_title">Documentation</h2>
+                   <p class="doc_content">Charts are a great tool because they communicate information visually.
+                        On velochart.com you can design your own chart based on your information.
+                        Firstly, you choose the direction from the <span class = "section_span">Design</span>
+                        section, then you fill all the information in the <span class = "section_span">Data</span> 
+                        section, then by clicking on the <span class = "section_span">Create Chart</span>
+                        button you will automatically be moved to the <span class = "section_span">Display</span>
+                        section. You can find your saved charts in the <span class = "section_span">Existing Charts</span>
+                        section!
+                   </p>
+               </div>
+            </div>
+           <div class="content selected" id="home">
+                <img class="home_img" src="img/home.png" alt="home">
+                <button class="add_item start" id="start"  onclick="openTab(event,'direction')">Start</button>
+           </div>
+           <div class="content" id="direction">
                <div class="data_set">
-                  <h2 class="content_title">Direction</h2> 
-                  <div class="direction">
+                    <h2 class="content_title">Direction</h2> 
+                    <div class="direction">
                         <label>
                             Vertical 
                             <input type="radio" name="direction" value="Vertical">
-                            <div class="far fa-chart-bar"></div>
+                            <img class="dir_image" src="img/direction.png" alt="horizontal">
                         </label>
                         <label>
                             Horizontal
                             <input type="radio" name="direction" value="Horizontal">
+                            <img class="dir_image horizontal" src="img/direction.png" alt="horizontal">
                         </label>
                   </div>
                </div>
             </div>
-           <div class="content" id="data_set">
-               <div class="data_set">
+            <div class="content" id="data_set">
+                <div class="data_set">
                 <h2 class="content_title">Data Set</h2> 
                 <div class="data">
-                     <label>
-                            <p class="data_info">Graph title</p>
+                    <label>
+                        <p class="data_info">Graph Title</p>
+                        <div class="data_field">
                             <input type="text" class="chart_data data_form">
-                     </label> 
-                     <label>
-                           <p class="data_info"> Maximum</p>
+                        </div>                           
+                    </label> 
+                    <label>
+                        <p class="data_info">Maximum Value</p>
+                        <div class="data_field">
                             <input type="number" class="chart_data data_form">
-                     </label> 
-                     <button id = "continue" class = "add_item">Continue</button>
-                    
+                        </div>
+                    </label> 
+                    <button id = "continue" class = "add_item">Continue</button>                    
                 </div>
             </div>
             <div id = "show">
@@ -63,16 +84,19 @@
                     <div class="details">
                         <label>
                             <p class="data_title">Item Name</p>
-                            <input type="text" id="name" class="chart_data">
+                            <div class="data_field">
+                                <input type="text" id="name" class="chart_data">
+                           </div>
                         </label>
                         <label>
                             <p class="data_title"> Item Value</p>
-                            <input type="number" id="value" class="chart_data">
+                            <div class="data_field">
+                                <input type="number" id="value" class="chart_data">
+                            </div>
                         </label>
                         <div>
                             <button id = "addItem" class="add_item">Add Item</button>
                         </div>
-
                     </div>
                 </div>
 
@@ -82,26 +106,32 @@
                         <div class="itemlist_header">
                             <div class="itemlist_cell">Name</div>
                             <div class="itemlist_cell">Value</div>
-                            <div class="itemlist_cell">Action</div>
-                            
-                        </div>
-                        
-                      
+                            <div class="itemlist_cell">Action</div>                            
+                        </div>                      
                     </div>
                     <div class="create_button">
                         <button id="create_chart" class="add_item">Create Chart</button>
                     </div>
-
-                </div>
                 </div>
             </div>
-           <div class="content" id="display">
-              <div class="chart_container" id="chart_container"></div>
-           </div>
-           <div class="content" id="existing_charts">Existing Charts</div>
         </div>
+        <div class="content" id="display">
+            <div class="chart_container" id="chart_container"></div>
+        </div>
+        <div class="content" id="existing_charts">
+            <div class="data_set">
+                <h2 class="content_title">Existing Charts</h2> 
+                <div class="data" id="chart_titles">
+                    <div class="itemlist_cell">Title</div>
+                    <div class="itemlist_cell">Amount of Items</div>
+                    <div class="itemlist_cell">Maximum value</div>                             
+                </div>
+            </div>
+        </div>
+    </div>
     </section> 
     <footer></footer>
     <script src="js/main.js"></script>
+    <script src="js/events.js"></script>
 </body>
 </html>
